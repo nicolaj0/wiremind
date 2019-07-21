@@ -19,7 +19,7 @@ internal class ToScrapper
     {
         _tripData = tripData;
     }
-    public  async Task Scrap()
+    public  async Task<List<Flight>> Scrap()
     {
         _browserSession.Get("https://www.transavia.com/fr-FR/accueil");
         
@@ -29,6 +29,8 @@ internal class ToScrapper
         await GetFlightDetails(JourneyType.InboundFlight, _tripData.InboundDate.ToString("yyyy-MM-dd"));
 
         _flights.ForEach(f => Console.WriteLine(f));
+
+        return _flights;
     }
 
     private void InitFlightAvailibilityHttpHandler()

@@ -10,7 +10,7 @@ using NUnit.Framework;
 namespace TestProject1
 {
     [TestFixture]
-    public class Tests
+    public class FlightExtractorTest
     {
         [Test]
         public void ExtractionTest()
@@ -24,5 +24,21 @@ namespace TestProject1
             Assert.That(res[1].Number, Is.EqualTo("HV5193"));
 
         }
+        
+        
+        [Test]
+        public void ExtractionTestNoData()
+        {
+            var path =
+                @"C:\dev\projects\perso\app1\ConsoleApplication2\TestProject1\Files\InboundFlightNoData.html";
+            var fileInfo = new FileInfo(path);
+            var res =new  FlightExtractor(fileInfo).ExtractFlight();
+
+           
+        }
+       
+        
+        
+        //PARIS | AMSTERDAM | today() + 15 days | today() + 22 days
     }
 }

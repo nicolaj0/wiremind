@@ -19,14 +19,8 @@ namespace ConsoleApplication2
     {
         public static async Task Main(string[] args)
         {
-            var data = new TripData
-            {
-                Destination = "AMS",
-                Origin = "ORY",
-                InboundDate = DateTime.Now.AddMonths(3),
-                OutboundDate = DateTime.Now.AddMonths(3).AddDays(20)
-            };
-            await new ToScrapper(data).Scrap();
+            //var cl = "PARIS | AMSTERDAM | today() + 15 days | today() + 22 days";
+            var res = await new ToScrapper(new TripDataExtractor().Extract(args[0])).Scrap();
         }
     }
 }

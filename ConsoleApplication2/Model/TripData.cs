@@ -1,6 +1,6 @@
 using System;
 
-internal class TripData
+public class TripData
 {
     private readonly string[] _args;
 

@@ -12,7 +12,8 @@ namespace TestProject1
 
         public override string ToString()
         {
-            return $"{nameof(DepartureTime)}: {DepartureTime}, {nameof(ArrivalTime)}: {ArrivalTime}, {nameof(Number)}: {Number}, {nameof(Price)}: {Price}, {nameof(Origin)}: {Origin}, {nameof(Destination)}: {Destination}";
+            return
+                $"{nameof(Origin)}: {Origin}, {nameof(Destination)}: {Destination} {nameof(DepartureTime)}: {DepartureTime}, {nameof(ArrivalTime)}: {ArrivalTime}, {nameof(Number)}: {Number}, {nameof(Price)}: {Price}";
         }
     }
 }

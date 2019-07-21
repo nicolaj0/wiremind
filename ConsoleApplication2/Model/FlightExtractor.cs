@@ -25,6 +25,12 @@ public  class FlightExtractor
         var flightData = _htmlDoc.DocumentNode.SelectNodes("//button[@class='flight-result-button']");
 
         var flights = new List<Flight>();
+
+        if (flightData == null)
+        {
+            return new List<Flight>{new FlightNotAvailable()};
+        }
+        
         flightData.ToList().ForEach(n =>
         {
             var flight = new Flight();
