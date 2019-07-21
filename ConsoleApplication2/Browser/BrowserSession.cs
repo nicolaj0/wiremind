@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Text;
-using System.Web;
 using HtmlAgilityPack;
 
 public class BrowserSession
@@ -10,7 +8,7 @@ public class BrowserSession
     private bool _isPost;
     private HtmlDocument _htmlDoc;
     private bool _isPostXhr;
-   
+
     private bool _capture;
 
     /// <summary>
@@ -44,7 +42,7 @@ public class BrowserSession
         _capture = false;
         _isPost = true;
         _isPostXhr = false;
-        
+
         CreateWebRequestObject().Load(url, "POST");
         return _htmlDoc.DocumentNode.InnerHtml;
     }
@@ -78,7 +76,7 @@ public class BrowserSession
     /// </summary>
     protected bool OnPreRequest(HttpWebRequest request)
     {
-       // request.Headers["Accept-Encoding"] = "gzip, deflate, br";
+        // request.Headers["Accept-Encoding"] = "gzip, deflate, br";
         request.Accept =
             "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3";
 
@@ -161,49 +159,5 @@ public class BrowserSession
     {
         _htmlDoc = document;
         FormElements = new FormElementCollection(_htmlDoc);
-    }
-}
-
-public class FormElementCollection : Dictionary<string, string>
-{
-    /// <summary>
-    /// Constructor. Parses the HtmlDocument to get all form input elements. 
-    /// </summary>
-    public FormElementCollection(HtmlDocument htmlDoc)
-    {
-        var inputs = htmlDoc.DocumentNode.Descendants("input");
-        foreach (var element in inputs)
-        {
-            string name = element.GetAttributeValue("name", "undefined");
-            string value = element.GetAttributeValue("value", "");
-            if (!name.Equals("undefined"))
-            {
-                if (!ContainsKey(name))
-                {
-                    Add(name, value);
-                }
-                else
-                {
-                    this[name] = value;
-                }
-            }
-
-            ;
-        }
-    }
-
-    /// <summary>
-    /// Assembles all form elements and values to POST. Also html encodes the values.  
-    /// </summary>
-    public string AssemblePostPayload()
-    {
-        StringBuilder sb = new StringBuilder();
-        foreach (var element in this)
-        {
-            string value = HttpUtility.UrlEncode(element.Value);
-            sb.Append("&" + element.Key + "=" + value);
-        }
-
-        return sb.ToString().Substring(1);
     }
 }
