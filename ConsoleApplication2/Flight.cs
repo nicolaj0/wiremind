@@ -9,6 +9,10 @@ namespace TestProject1
 
         public string Origin { get; set; }
         public string Destination { get; set; }
-        
+
+        public override string ToString()
+        {
+            return $"{nameof(DepartureTime)}: {DepartureTime}, {nameof(ArrivalTime)}: {ArrivalTime}, {nameof(Number)}: {Number}, {nameof(Price)}: {Price}, {nameof(Origin)}: {Origin}, {nameof(Destination)}: {Destination}";
+        }
     }
 }

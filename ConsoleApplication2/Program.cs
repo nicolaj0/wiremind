@@ -11,6 +11,7 @@ using HtmlAgilityPack;
 using Newtonsoft.Json;
 using ScrapySharp.Html.Forms;
 using ScrapySharp.Network;
+using TestProject1;
 
 namespace ConsoleApplication2
 {
@@ -19,6 +20,7 @@ namespace ConsoleApplication2
         public static async Task Main(string[] args)
         {
             var b = new BrowserSession();
+            var flights = new List<Flight>();
             b.Get("https://www.transavia.com/fr-FR/accueil");
 
             Thread.Sleep(1000);
@@ -71,7 +73,7 @@ namespace ConsoleApplication2
             var html = await res.Content.ReadAsStringAsync();
             var jObject = Newtonsoft.Json.Linq.JObject.Parse(html);
             var ddd = (string) jObject["SingleDayOutbound"];
-            File.WriteAllText($"OutboundFlight_{Guid.NewGuid()}.html", ddd);
+            flights.AddRange(new FlightExtractor(ddd).ExtractFlight());
 
 
             dict = new Dictionary<string, string>();
@@ -84,12 +86,11 @@ namespace ConsoleApplication2
             html = await res.Content.ReadAsStringAsync();
             jObject = Newtonsoft.Json.Linq.JObject.Parse(html);
             ddd = (string) jObject["SingleDayInbound"];
-            File.WriteAllText($"InboundFlight_{Guid.NewGuid()}.html", ddd);
+            flights.AddRange(new FlightExtractor(ddd).ExtractFlight());
+            
+            
+            flights.ForEach(f=> Console.WriteLine(f));
 
-            
-            
-            //<time.*class=.departure.*[\n]+.*?</time>
-            //<li class=.*>\n.*\n*.*?<\/li>
         }
     }
 }

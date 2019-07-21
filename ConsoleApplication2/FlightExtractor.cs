@@ -17,7 +17,7 @@ public  class FlightExtractor
 
     public FlightExtractor(string html)
     {
-        _htmlDoc.Load(html);
+        _htmlDoc.LoadHtml(html);
     }
     
     public  List<Flight> ExtractFlight()
