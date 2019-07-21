@@ -87,41 +87,9 @@ namespace ConsoleApplication2
             File.WriteAllText($"InboundFlight_{Guid.NewGuid()}.html", ddd);
 
             
-            // request.Headers["X-Requested-With"] = "XMLHttpRequest";
-
-            //  request.ContentType = "application/x-www-form-urlencoded; charset=UTF-8";
-
-
-            //var flight = b.PostXhr("https://www.transavia.com/fr-FR/reservez-un-vol/vols/SingleDayAvailability/");
-
-            //https: //www.transavia.com/fr-FR/reservez-un-vol/vols/SingleDayAvailability/
-
-            // File.WriteAllText($"res2{Guid.NewGuid()}.html", flight);
-            /*ScrapingBrowser Browser = new ScrapingBrowser();
-            Browser.AllowAutoRedirect = true; // Browser has settings you can access in setup
-            Browser.AllowMetaRedirect = true;
-            WebPage PageResult = Browser.NavigateToPage(new Uri("https://www.transavia.com/fr-FR"));
-
-            PageWebForm form = PageResult.FindFormById("desktop");
-
-            form["routeSelection.DepartureStation"] = "ORY";
-            form["routeSelection.ArrivalStation"] = "AGA";
-            form["dateSelection.OutboundDate.Day"] = "17";
-            form["dateSelection.OutboundDate.Month"] = "7";
-            form["dateSelection.OutboundDate.Year"] = "2019";
-            form["dateSelection.IsReturnFlight"] = "true";
-            form["dateSelection.InboundDate.Day"] = "24";
-            form["dateSelection.InboundDate.Month"] = "7";
-            form["dateSelection.InboundDate.Year"] = "2019";
-            form["selectPassengersCount.AdultCount"] = "1";
-            form["selectPassengersCount.ChildCount"] = "0";
-            form["selectPassengersCount.InfantCount"] = "0";
-            form["flyingBlueSearch.FlyingBlueSearch"] = "false";
-
-            form.Method = HttpVerb.Post;
-            WebPage resultsPage = form.Submit();
-
-            File.WriteAllText("res.html", resultsPage.Content);*/
+            
+            //<time.*class=.departure.*[\n]+.*?</time>
+            //<li class=.*>\n.*\n*.*?<\/li>
         }
     }
 }

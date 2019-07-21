@@ -4,14 +4,14 @@
     <PropertyGroup>
         <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-        <ProjectGuid>{0A9F8FE2-89C5-4A53-A652-DCE817B25A1D}</ProjectGuid>
-        <OutputType>Exe</OutputType>
+        <ProjectGuid>{981420CD-9E44-41DB-BDBF-BDCA778C859D}</ProjectGuid>
+        <ProjectTypeGuids>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+        <OutputType>Library</OutputType>
         <AppDesignerFolder>Properties</AppDesignerFolder>
-        <RootNamespace>ConsoleApplication2</RootNamespace>
-        <AssemblyName>ConsoleApplication2</AssemblyName>
+        <RootNamespace>TestProject1</RootNamespace>
+        <AssemblyName>TestProject1</AssemblyName>
         <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
-        <LangVersion>7.1</LangVersion>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
         <PlatformTarget>AnyCPU</PlatformTarget>
@@ -41,11 +41,6 @@
           <HintPath>..\packages\HtmlAgilityPack.1.11.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
           <Private>True</Private>
         </Reference>
-        <Reference Include="Microsoft.CSharp" />
-        <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
-          <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
         <Reference Include="ScrapySharp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
           <HintPath>..\packages\ScrapySharp.3.0.0\lib\netstandard2.0\ScrapySharp.dll</HintPath>
           <Private>True</Private>
@@ -55,26 +50,31 @@
           <Private>True</Private>
         </Reference>
         <Reference Include="System" />
+        <Reference Include="System.Configuration" />
         <Reference Include="System.Core" />
         <Reference Include="System.Data" />
-        <Reference Include="System.Net.Http" />
         <Reference Include="System.Runtime.Caching" />
-        <Reference Include="System.Web" />
-        <Reference Include="System.Web.Http.Common, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
-          <HintPath>..\packages\System.Web.Http.Common.4.0.20126.16343\lib\net40\System.Web.Http.Common.dll</HintPath>
-          <Private>True</Private>
-        </Reference>
         <Reference Include="System.Xml" />
+        <Reference Include="nunit.framework, Version=3.5.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb">
+            <HintPath>..\packages\NUnit.3.5.0\lib\net45\nunit.framework.dll</HintPath>
+        </Reference>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="BrowserSession.cs" />
-        <Compile Include="Flight.cs" />
-        <Compile Include="FlightExtractor.cs" />
-        <Compile Include="Program.cs" />
+        <Compile Include="Tests.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <ItemGroup>
+      <Content Include="Files\InboundFlight.html" />
+      <Content Include="Files\OutboundFlight.html" />
+    </ItemGroup>
+    <ItemGroup>
       <None Include="packages.config" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\ConsoleApplication2\ConsoleApplication2.csproj">
+        <Project>{0a9f8fe2-89c5-4a53-a652-dce817b25a1d}</Project>
+        <Name>ConsoleApplication2</Name>
+      </ProjectReference>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
