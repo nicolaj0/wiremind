@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text.RegularExpressions;
-using HtmlAgilityPack;
+﻿using System.IO;
+using ConsoleApplication2.Model;
 using NUnit.Framework;
 
 namespace TestProject1

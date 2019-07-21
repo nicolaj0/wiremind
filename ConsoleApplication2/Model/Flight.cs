@@ -1,19 +1,26 @@
-namespace TestProject1
+using ConsoleApplication2.Scraping;
+
+namespace ConsoleApplication2.Model
 {
     public class Flight
     {
+        public  Leg Leg { get; set; }
+
+        public Flight(Leg leg)
+        {
+            Leg = leg;
+        }
+
         public string DepartureTime { get; set; }
         public string ArrivalTime { get; set; }
         public string Number { get; set; }
         public string Price { get; set; }
 
-        public string Origin { get; set; }
-        public string Destination { get; set; }
+      
 
         public override string ToString()
         {
-            return
-                $"{nameof(Origin)}: {Origin}, {nameof(Destination)}: {Destination} {nameof(DepartureTime)}: {DepartureTime}, {nameof(ArrivalTime)}: {ArrivalTime}, {nameof(Number)}: {Number}, {nameof(Price)}: {Price}";
+            return $"{Leg} | {DepartureTime} | {ArrivalTime} | {Number} | {Price}";
         }
     }
 }

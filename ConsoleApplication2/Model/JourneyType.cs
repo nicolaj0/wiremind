@@ -1,5 +1,8 @@
-internal enum JourneyType
+namespace ConsoleApplication2.Model
 {
-    OutboundFlight,
-    InboundFlight
+    internal enum JourneyType
+    {
+        OutboundFlight,
+        InboundFlight
+    }
 }

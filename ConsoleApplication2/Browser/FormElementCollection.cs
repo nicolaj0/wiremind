@@ -3,46 +3,49 @@ using System.Text;
 using System.Web;
 using HtmlAgilityPack;
 
-public class FormElementCollection : Dictionary<string, string>
+namespace ConsoleApplication2.Browser
 {
-    /// <summary>
-    /// Constructor. Parses the HtmlDocument to get all form input elements. 
-    /// </summary>
-    public FormElementCollection(HtmlDocument htmlDoc)
+    public class FormElementCollection : Dictionary<string, string>
     {
-        var inputs = htmlDoc.DocumentNode.Descendants("input");
-        foreach (var element in inputs)
+        /// <summary>
+        /// Constructor. Parses the HtmlDocument to get all form input elements. 
+        /// </summary>
+        public FormElementCollection(HtmlDocument htmlDoc)
         {
-            string name = element.GetAttributeValue("name", "undefined");
-            string value = element.GetAttributeValue("value", "");
-            if (!name.Equals("undefined"))
+            var inputs = htmlDoc.DocumentNode.Descendants("input");
+            foreach (var element in inputs)
             {
-                if (!ContainsKey(name))
+                string name = element.GetAttributeValue("name", "undefined");
+                string value = element.GetAttributeValue("value", "");
+                if (!name.Equals("undefined"))
                 {
-                    Add(name, value);
+                    if (!ContainsKey(name))
+                    {
+                        Add(name, value);
+                    }
+                    else
+                    {
+                        this[name] = value;
+                    }
                 }
-                else
-                {
-                    this[name] = value;
-                }
+
+                ;
+            }
+        }
+
+        /// <summary>
+        /// Assembles all form elements and values to POST. Also html encodes the values.  
+        /// </summary>
+        public string AssemblePostPayload()
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (var element in this)
+            {
+                string value = HttpUtility.UrlEncode(element.Value);
+                sb.Append("&" + element.Key + "=" + value);
             }
 
-            ;
+            return sb.ToString().Substring(1);
         }
-    }
-
-    /// <summary>
-    /// Assembles all form elements and values to POST. Also html encodes the values.  
-    /// </summary>
-    public string AssemblePostPayload()
-    {
-        StringBuilder sb = new StringBuilder();
-        foreach (var element in this)
-        {
-            string value = HttpUtility.UrlEncode(element.Value);
-            sb.Append("&" + element.Key + "=" + value);
-        }
-
-        return sb.ToString().Substring(1);
     }
 }
