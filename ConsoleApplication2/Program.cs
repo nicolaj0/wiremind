@@ -16,14 +16,14 @@ namespace ConsoleApplication2
             try
             {
                 var allowedCodes = new IataCodes();
-                
+
                 var trip = Trip.Build(args[0], allowedCodes);
                 Console.WriteLine($"launch query with {trip}");
                 var scrappedData = await new Scrapper(trip).Scrap();
                 scrappedData.ForEach(Console.WriteLine);
-                File.WriteAllLines($"{trip}_{DateTime.UtcNow:yyyyMMddHHmmssfff}",
+                var resDir = Directory.CreateDirectory("Results");
+                File.WriteAllLines(Path.Combine(resDir.FullName, $"{trip}_{DateTime.UtcNow:yyyyMMddHHmmssfff}"),
                     scrappedData.Select(p => p.ToString()).ToList());
-                Console.ReadLine();
             }
 
             catch (Exception ex) when (ex is AuthenticationException || ex is ArgumentException)
@@ -33,7 +33,7 @@ namespace ConsoleApplication2
 
             catch (Exception ex)
             {
-                Console.WriteLine("Unhadled exeption");
+                Console.WriteLine("Unhandled exeption");
                 Console.WriteLine(ex);
             }
         }
