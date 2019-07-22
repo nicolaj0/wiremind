@@ -10,7 +10,7 @@ namespace ConsoleApplication2.Scraping
 
         public override string ToString()
         {
-            return $" {From}|{To}";
+            return $"{From}|{To}";
         }
     }
 }

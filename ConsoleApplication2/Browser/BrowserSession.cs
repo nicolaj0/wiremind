@@ -12,7 +12,7 @@ namespace ConsoleApplication2.Browser
         private HtmlDocument _htmlDoc;
         private bool _capture;
         private HttpClient _client;
-        private string _userAgent;
+        private Headers _headers = new Headers();
 
         /// <summary>
         /// System.Net.CookieCollection. Provides a collection container for instances of Cookie class 
@@ -68,13 +68,9 @@ namespace ConsoleApplication2.Browser
         protected bool OnPreRequest(HttpWebRequest request)
         {
             // request.Headers["Accept-Encoding"] = "gzip, deflate, br";
-            request.Accept =
-                "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3";
-
-            request.UserAgent =
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36";
-            request.Headers["Accept-Language"] =
-                "Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7,de;q=0.6";
+            request.Accept = _headers["Accept"];
+            request.UserAgent =_headers["UserAgent"];
+            request.Headers["Accept-Language"] =_headers["Accept-Language"];
             AddCookiesTo(request); // Add cookies that were saved from previous requests
              if (_isPost)
             {
@@ -155,10 +151,9 @@ namespace ConsoleApplication2.Browser
             handler.UseCookies = true;
             // client.DefaultRequestHeaders.Accept = ""
             _client.DefaultRequestHeaders.Add("Accept", "*/*");
-            _userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36";
             _client.DefaultRequestHeaders.Add("X-Requested-With", "XMLHttpRequest");
-            _client.DefaultRequestHeaders.UserAgent.ParseAdd(_userAgent);
-            _client.DefaultRequestHeaders.Add("Accept-Language", "fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7,de;q=0.6");
+            _client.DefaultRequestHeaders.UserAgent.ParseAdd(_headers["UserAgent"]);
+            _client.DefaultRequestHeaders.Add("Accept-Language", _headers["Accept-Language"]);
             return _client;
         }
     }
