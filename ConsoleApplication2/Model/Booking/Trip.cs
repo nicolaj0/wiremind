@@ -7,7 +7,6 @@ namespace ConsoleApplication2.Model
 {
     public class Trip
     {
-        private static Dictionary<string, string> _iata;
         public string Origin { get; set; }
         public string Destination { get; set; }
         public DateTime OutboundDate { get; set; }
@@ -37,7 +36,7 @@ namespace ConsoleApplication2.Model
                 outboundDate = extracted[2];
                 inboundDate = extracted[3];
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw new ArgumentException("query must be of type : PARIS | AMSTERDAM | today() + 15 days | today() + 22 days");
             }

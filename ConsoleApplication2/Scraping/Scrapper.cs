@@ -29,12 +29,19 @@ namespace ConsoleApplication2.Scraping
         {
             Init();
             TryExtractToken();
+            
             PostTripData();
             await GetFlightData();
 
             return _result;
         }
 
+        
+        private void Init()
+        {
+            _browserSession.Get("https://www.transavia.com/fr-FR/accueil");
+            
+        }
         private void TryExtractToken()
         {
             try
@@ -47,11 +54,7 @@ namespace ConsoleApplication2.Scraping
             }
         }
 
-        private void Init()
-        {
-            _browserSession.Get("https://www.transavia.com/fr-FR/accueil");
-            _client = _browserSession.InitHttpHandler();
-        }
+        
         private List<Flight> ExtractFlights(Leg leg, string payload, string key)
         {
             var jObject = JObject.Parse(payload);
@@ -79,6 +82,8 @@ namespace ConsoleApplication2.Scraping
         
         private async Task GetFlightData()
         {
+            _client = _browserSession.InitHttpHandler();
+            
             var outBound = await GetFlightAvailabilityReponse(JourneyType.OutboundFlight);
             var inBound = await GetFlightAvailabilityReponse(JourneyType.InboundFlight);
 
