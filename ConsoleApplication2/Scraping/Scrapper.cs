@@ -48,7 +48,7 @@ namespace ConsoleApplication2.Scraping
             {
                 _token = _browserSession.Cookies["__RequestVerificationToken"];
             }
-            catch (ArgumentOutOfRangeException ex)
+            catch (Exception ex)
             {
                 throw new AuthenticationException("Session detected as bot - try changing IP", ex);
             }
