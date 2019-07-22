@@ -60,9 +60,9 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Model\FlightExtractorTest.cs" />
-        <Compile Include="Model\TripDataTest.cs" />
+        <Compile Include="ResponseParserTest.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="TripTest.cs" />
     </ItemGroup>
     <ItemGroup>
       <Content Include="Files\InboundFlight.html" />

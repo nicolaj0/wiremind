@@ -15,11 +15,8 @@ namespace ConsoleApplication2
         {
             try
             {
-                var allowedCodes = new IataCodes
-                {
-                    {"PARIS", "ORY"},
-                    {"AMSTERDAM", "AMS"},
-                };
+                var allowedCodes = new IataCodes();
+                
                 var trip = Trip.Build(args[0], allowedCodes);
                 Console.WriteLine($"launch query with {trip}");
                 var scrappedData = await new Scrapper(trip).Scrap();

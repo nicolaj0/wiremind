@@ -31,8 +31,8 @@ namespace ConsoleApplication2.Model
             string inboundDate;
             try
             {
-                origin = extracted[0];
-                destination = extracted[1];
+                origin = extracted[0].ToUpper();
+                destination = extracted[1].ToUpper();
                 outboundDate = extracted[2];
                 inboundDate = extracted[3];
             }

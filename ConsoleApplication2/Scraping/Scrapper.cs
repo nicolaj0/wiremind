@@ -58,7 +58,7 @@ namespace ConsoleApplication2.Scraping
         private List<Flight> ExtractFlights(Leg leg, string payload, string key)
         {
             var jObject = JObject.Parse(payload);
-            return new ResponseParser((string) jObject[key], leg).ExtractFlight();
+            return new ResponseParser((string) jObject[key], leg).ExtractFlights();
         }
 
         private void PostTripData()

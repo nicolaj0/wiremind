@@ -25,7 +25,7 @@ namespace ConsoleApplication2.Model
             _htmlDoc.LoadHtml(html);
         }
     
-        public  List<Flight> ExtractFlight()
+        public  List<Flight> ExtractFlights()
         {
             var flightData = _htmlDoc.DocumentNode.SelectNodes("//button[@class='flight-result-button']");
 

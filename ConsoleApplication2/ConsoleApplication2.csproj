@@ -69,9 +69,9 @@
     <ItemGroup>
         <Compile Include="Browser\BrowserSession.cs" />
         <Compile Include="Browser\FormElementCollection.cs" />
+        <Compile Include="Data\IataCodes.cs" />
         <Compile Include="Model\Booking\Flight.cs" />
         <Compile Include="Model\Booking\FlightNotAvailable.cs" />
-        <Compile Include="Model\Booking\IataCodes.cs" />
         <Compile Include="Model\Booking\JourneyType.cs" />
         <Compile Include="Model\Booking\Leg.cs" />
         <Compile Include="Model\Booking\Trip.cs" />
