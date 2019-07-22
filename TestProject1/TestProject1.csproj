@@ -61,7 +61,7 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Model\FlightExtractorTest.cs" />
-        <Compile Include="Model\TripDataExtractorTest.cs" />
+        <Compile Include="Model\TripDataTest.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <ItemGroup>

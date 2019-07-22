@@ -8,17 +8,18 @@ using HtmlAgilityPack;
 
 namespace ConsoleApplication2.Model
 {
-    public  class FlightExtractor
+    public  class ResponseParser
     {
         private readonly Leg _leg;
-        private HtmlDocument _htmlDoc = new HtmlDocument();
-    
-        public FlightExtractor(FileInfo path)
+        private readonly HtmlDocument _htmlDoc = new HtmlDocument();
+        private readonly List<Flight> _extractFlight = new List<Flight>();
+
+        public ResponseParser(FileInfo path)
         {
             _htmlDoc.Load(path.FullName);
         }
 
-        public FlightExtractor(string html, Leg leg)
+        public ResponseParser(string html, Leg leg)
         {
             _leg = leg;
             _htmlDoc.LoadHtml(html);
@@ -27,8 +28,6 @@ namespace ConsoleApplication2.Model
         public  List<Flight> ExtractFlight()
         {
             var flightData = _htmlDoc.DocumentNode.SelectNodes("//button[@class='flight-result-button']");
-
-            var flights = new List<Flight>();
 
             if (flightData == null)
             {
@@ -52,10 +51,10 @@ namespace ConsoleApplication2.Model
                 )[2].Trim();
                 flight.Price = Regex.Replace(price, @"[^\d]", "");
 
-                flights.Add(flight);
+                _extractFlight.Add(flight);
             });
 
-            return flights;
+            return _extractFlight;
 
         }
     }

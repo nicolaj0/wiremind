@@ -69,16 +69,16 @@
     <ItemGroup>
         <Compile Include="Browser\BrowserSession.cs" />
         <Compile Include="Browser\FormElementCollection.cs" />
-        <Compile Include="Model\Flight.cs" />
-        <Compile Include="Model\FlightExtractor.cs" />
-        <Compile Include="Model\FlightNotAvailable.cs" />
-        <Compile Include="Model\JourneyType.cs" />
-        <Compile Include="Model\Leg.cs" />
-        <Compile Include="Model\TripData.cs" />
-        <Compile Include="Model\TripDataExtractor.cs" />
+        <Compile Include="Model\Booking\Flight.cs" />
+        <Compile Include="Model\Booking\FlightNotAvailable.cs" />
+        <Compile Include="Model\Booking\IataCodes.cs" />
+        <Compile Include="Model\Booking\JourneyType.cs" />
+        <Compile Include="Model\Booking\Leg.cs" />
+        <Compile Include="Model\Booking\Trip.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
-        <Compile Include="Scraping\ToScrapper.cs" />
+        <Compile Include="Scraping\ResponseParser.cs" />
+        <Compile Include="Scraping\Scrapper.cs" />
     </ItemGroup>
     <ItemGroup>
       <None Include="packages.config" />

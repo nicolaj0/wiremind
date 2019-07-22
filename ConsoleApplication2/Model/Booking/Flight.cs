@@ -15,12 +15,11 @@ namespace ConsoleApplication2.Model
         public string ArrivalTime { get; set; }
         public string Number { get; set; }
         public string Price { get; set; }
-
       
 
         public override string ToString()
         {
-            return $"{Leg} | {DepartureTime} | {ArrivalTime} | {Number} | {Price}";
+            return $"{Number} | {Leg} | {DepartureTime} | {ArrivalTime} | {Price}€";
         }
     }
 }

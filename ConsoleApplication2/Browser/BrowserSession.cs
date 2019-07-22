@@ -1,5 +1,7 @@
 using System.Net;
+using System.Net.Http;
 using System.Text;
+using ConsoleApplication2.Scraping;
 using HtmlAgilityPack;
 
 namespace ConsoleApplication2.Browser
@@ -8,9 +10,9 @@ namespace ConsoleApplication2.Browser
     {
         private bool _isPost;
         private HtmlDocument _htmlDoc;
-        private bool _isPostXhr;
-
         private bool _capture;
+        private HttpClient _client;
+        private string _userAgent;
 
         /// <summary>
         /// System.Net.CookieCollection. Provides a collection container for instances of Cookie class 
@@ -29,7 +31,6 @@ namespace ConsoleApplication2.Browser
         {
             _isPost = false;
             _capture = true;
-            _isPostXhr = false;
 
             CreateWebRequestObject().Load(url);
             return _htmlDoc.DocumentNode.InnerHtml;
@@ -42,22 +43,11 @@ namespace ConsoleApplication2.Browser
         {
             _capture = false;
             _isPost = true;
-            _isPostXhr = false;
-
             CreateWebRequestObject().Load(url, "POST");
             return _htmlDoc.DocumentNode.InnerHtml;
         }
 
-        public string PostXhr(string url)
-        {
-            _isPost = true;
-            _isPostXhr = true;
-            _capture = true;
-
-            CreateWebRequestObject().Load(url, "POST");
-            return _htmlDoc.DocumentNode.InnerHtml;
-        }
-
+        
         /// <summary>
         /// Creates the HtmlWeb object and initializes all event handlers. 
         /// </summary>
@@ -86,13 +76,7 @@ namespace ConsoleApplication2.Browser
             request.Headers["Accept-Language"] =
                 "Accept-Language: fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7,de;q=0.6";
             AddCookiesTo(request); // Add cookies that were saved from previous requests
-            if (_isPostXhr)
-            {
-                request.Headers["X-Requested-With"] = "XMLHttpRequest";
-                request.Accept = "*/*";
-                request.ContentType = "application/x-www-form-urlencoded; charset=UTF-8";
-            } // We only need to add post data on a POST request
-            else if (_isPost && !_isPostXhr)
+             if (_isPost)
             {
                 request.ContentType = "application/x-www-form-urlencoded";
             }
@@ -160,6 +144,22 @@ namespace ConsoleApplication2.Browser
         {
             _htmlDoc = document;
             FormElements = new FormElementCollection(_htmlDoc);
+        }
+        
+        
+        public HttpClient   InitHttpHandler()
+        {
+            var handler = new HttpClientHandler {CookieContainer = new CookieContainer()};
+            handler.CookieContainer.Add(Cookies);
+            _client = new HttpClient(handler);
+            handler.UseCookies = true;
+            // client.DefaultRequestHeaders.Accept = ""
+            _client.DefaultRequestHeaders.Add("Accept", "*/*");
+            _userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36";
+            _client.DefaultRequestHeaders.Add("X-Requested-With", "XMLHttpRequest");
+            _client.DefaultRequestHeaders.UserAgent.ParseAdd(_userAgent);
+            _client.DefaultRequestHeaders.Add("Accept-Language", "fr-FR,fr;q=0.9,en-US;q=0.8,en;q=0.7,de;q=0.6");
+            return _client;
         }
     }
 }

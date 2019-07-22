@@ -13,7 +13,7 @@ namespace TestProject1
             var path =
                 @"C:\dev\projects\perso\app1\ConsoleApplication2\TestProject1\Files\InboundFlight.html";
             var fileInfo = new FileInfo(path);
-            var res =new  FlightExtractor(fileInfo).ExtractFlight();
+            var res =new  ResponseParser(fileInfo).ExtractFlight();
 
             Assert.That(res[0].Number, Is.EqualTo("TO4011"));
             Assert.That(res[1].Number, Is.EqualTo("HV5193"));
@@ -27,7 +27,7 @@ namespace TestProject1
             var path =
                 @"C:\dev\projects\perso\app1\ConsoleApplication2\TestProject1\Files\InboundFlightNoData.html";
             var fileInfo = new FileInfo(path);
-            var res =new  FlightExtractor(fileInfo).ExtractFlight();
+            var res =new  ResponseParser(fileInfo).ExtractFlight();
 
            
         }
