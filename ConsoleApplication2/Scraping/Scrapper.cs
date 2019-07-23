@@ -14,11 +14,12 @@ namespace ConsoleApplication2.Scraping
 {
     internal class Scrapper
     {
-        private  Trip _trip;
+        private Trip _trip;
         private BrowserSession _browserSession;
         private HttpClient _client;
         private List<Flight> _result = new List<Flight>();
         private Cookie _token;
+        private string _sessionDetectedAsBotMessage = "Session detected as bot - try changing IP";
 
         public Scrapper(BrowserSession browserSession)
         {
@@ -27,24 +28,23 @@ namespace ConsoleApplication2.Scraping
 
         public async Task<List<Flight>> Scrap(Trip trip)
         {
-            
             _trip = trip;
-            
+
             Init();
             TryExtractToken();
-            
+
             PostTripData();
             await GetFlightData();
 
             return _result;
         }
 
-        
+
         private void Init()
         {
             _browserSession.Get("https://www.transavia.com/fr-FR/accueil");
-            
         }
+
         private void TryExtractToken()
         {
             try
@@ -53,15 +53,22 @@ namespace ConsoleApplication2.Scraping
             }
             catch (Exception ex)
             {
-                throw new AuthenticationException("Session detected as bot - try changing IP", ex);
+                throw new AuthenticationException(_sessionDetectedAsBotMessage, ex);
             }
         }
 
-        
+
         private List<Flight> ExtractFlights(Leg leg, string payload, string key)
         {
-            var jObject = JObject.Parse(payload);
-            return new ResponseParser((string) jObject[key], leg).ExtractFlights();
+            try
+            {
+                var jObject = JObject.Parse(payload);
+                return new ResponseParser((string) jObject[key], leg).ExtractFlights();
+            }
+            catch (Exception e)
+            {
+                throw new AuthenticationException(_sessionDetectedAsBotMessage, e);
+            }
         }
 
         private void PostTripData()
@@ -82,11 +89,11 @@ namespace ConsoleApplication2.Scraping
 
             _browserSession.Post("https://www.transavia.com/fr-FR/reservez-un-vol/vols/deeplink");
         }
-        
+
         private async Task GetFlightData()
         {
             _client = _browserSession.InitHttpHandler();
-            
+
             var outBound = await GetFlightAvailabilityReponse(JourneyType.OutboundFlight);
             var inBound = await GetFlightAvailabilityReponse(JourneyType.InboundFlight);
 

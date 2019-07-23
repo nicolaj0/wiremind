@@ -17,18 +17,19 @@ namespace ConsoleApplication2
             try
             {
                 var allowedCodes = new IataCodes();
+                var tripData = File.Exists("Scrap.txt") ? File.ReadAllLines("Scrap.txt") : args;
+                var scrapper = new Scrapper(new BrowserSession());
 
-                var trip = Trip.Build(args[0], allowedCodes);
-                Console.WriteLine($"launch query with {trip}");
-                var browserSession = new BrowserSession();
-                var scrapper = new Scrapper(browserSession);
-                
-                var scrappedData = await scrapper.Scrap(trip);
-                
-                scrappedData.ForEach(Console.WriteLine);
-                var resDir = Directory.CreateDirectory("Results");
-                File.WriteAllLines(Path.Combine(resDir.FullName, $"{trip}_{DateTime.UtcNow:yyyyMMddHHmmssfff}"),
-                    scrappedData.Select(p => p.ToString()).ToList());
+                foreach (var d in tripData.ToList())
+                {
+                    var trip = Trip.Build(d, allowedCodes);
+                    Console.WriteLine($"launch query with {trip}");
+                    var scrappedData = await scrapper.Scrap(trip);
+                    scrappedData.ForEach(Console.WriteLine);
+                    var resDir = Directory.CreateDirectory("Results");
+                    File.WriteAllLines(Path.Combine(resDir.FullName, $"{trip}_{DateTime.UtcNow:yyyyMMddHHmmssfff}"),
+                        scrappedData.Select(p => p.ToString()).ToList());
+                }
             }
 
             catch (Exception ex) when (ex is AuthenticationException || ex is ArgumentException)
