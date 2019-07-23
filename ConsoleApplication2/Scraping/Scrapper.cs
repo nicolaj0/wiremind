@@ -24,14 +24,13 @@ namespace ConsoleApplication2.Scraping
         public Scrapper(BrowserSession browserSession)
         {
             _browserSession = browserSession;
+            _browserSession.Get("https://www.transavia.com/fr-FR/accueil");
+             TryExtractToken();
         }
 
         public async Task<List<Flight>> Scrap(Trip trip)
         {
             _trip = trip;
-
-            Init();
-            TryExtractToken();
 
             PostTripData();
             await GetFlightData();
@@ -39,11 +38,6 @@ namespace ConsoleApplication2.Scraping
             return _result;
         }
 
-
-        private void Init()
-        {
-            _browserSession.Get("https://www.transavia.com/fr-FR/accueil");
-        }
 
         private void TryExtractToken()
         {

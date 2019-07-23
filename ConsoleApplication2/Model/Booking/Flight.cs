@@ -19,5 +19,10 @@ namespace ConsoleApplication2.Model
         {
             return $"{Number}|{Leg}|{DepartureTime}|{ArrivalTime}|{Price}EUR";
         }
+        
+        public  string ToReport()
+        {
+            return $"{Leg.Date.Date}|{Number}|{Leg}|{DepartureTime}|{ArrivalTime}|{Price}EUR";
+        }
     }
 }
