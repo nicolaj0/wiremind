@@ -14,19 +14,22 @@ namespace ConsoleApplication2.Scraping
 {
     internal class Scrapper
     {
-        private readonly Trip _trip;
-        private BrowserSession _browserSession = new BrowserSession();
+        private  Trip _trip;
+        private BrowserSession _browserSession;
         private HttpClient _client;
         private List<Flight> _result = new List<Flight>();
         private Cookie _token;
 
-        public Scrapper(Trip trip)
+        public Scrapper(BrowserSession browserSession)
         {
-            _trip = trip;
+            _browserSession = browserSession;
         }
 
-        public async Task<List<Flight>> Scrap()
+        public async Task<List<Flight>> Scrap(Trip trip)
         {
+            
+            _trip = trip;
+            
             Init();
             TryExtractToken();
             
